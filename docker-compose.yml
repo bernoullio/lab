@@ -7,6 +7,8 @@ test:
 live:
   build: .
   dockerfile: Dockerfile.live
+  ports:
+    - "8333:8000"
   volumes:
     - ./:/usr/src/app
 
