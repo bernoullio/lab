@@ -1,0 +1,12 @@
+test:
+  build: .
+  dockerfile: Dockerfile.test
+  volumes:
+    - ./:/usr/src/app
+
+live:
+  build: .
+  dockerfile: Dockerfile.live
+  volumes:
+    - ./:/usr/src/app
+
