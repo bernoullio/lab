@@ -5,6 +5,7 @@ MAINTAINER skeang@gmail.com
 RUN apt-get install -y npm nodejs-legacy
 RUN npm install -g configurable-http-proxy
 RUN pip3 install jupyterhub
+RUN pip3 install jupyter
 
-CMD jupyterhub --no-ssl
+CMD jupyterhub --no-ssl -f /etc/jupyterhub/jupyterhub_config.py
 

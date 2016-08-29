@@ -10,5 +10,8 @@ live:
   ports:
     - "8333:8000"
   volumes:
-    - ./:/usr/src/app
+    - ./home:/home
+    - ./srv/jupyterhub:/srv/jupyterhub
+    - ./etc/jupyterhub:/etc/jupyterhub
+    - ./var/log:/var/log
 

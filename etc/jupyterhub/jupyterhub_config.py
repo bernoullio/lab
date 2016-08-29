@@ -47,7 +47,7 @@
 # Grant admin users permission to access single-user servers.
 # 
 # Users should be properly informed if this is enabled.
-# c.JupyterHub.admin_access = False
+c.JupyterHub.admin_access = True
 
 # DEPRECATED, use Authenticator.admin_users instead.
 # c.JupyterHub.admin_users = set()
@@ -356,7 +356,7 @@
 # set of usernames of admin users
 # 
 # If unspecified, only the user that launches the server will be admin.
-# c.Authenticator.admin_users = set()
+c.Authenticator.admin_users = {'nimda'}
 
 # Dictionary mapping authenticator usernames to JupyterHub users.
 # 
