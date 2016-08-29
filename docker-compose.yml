@@ -7,10 +7,12 @@ test:
 live:
   build: .
   dockerfile: Dockerfile.live
+  env_file: .env
   ports:
     - "8333:8000"
   volumes:
     - ./home:/home
+    - ./srv/oauthenticator:/srv/oauthenticator
     - ./srv/jupyterhub:/srv/jupyterhub
     - ./etc/jupyterhub:/etc/jupyterhub
     - ./var/log:/var/log
