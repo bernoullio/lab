@@ -3,6 +3,7 @@ Reads csv file and ingests into zipline databundle
 Example:
     - CSV_FILE=fixtures/eur_usd_m1.csv zipline ingest
 """
+import pytest
 import pandas as pd
 from zipline.data import bundles
 
@@ -35,9 +36,8 @@ def csv_ingest(environ,
         show_progress,
         output_dir):
 
-    df = ohlc_from_csv(environ.get("CSV_FILE"))
+    df = ohlc_from_csv(environ.get("BUNDLE_CSV_FILE"))
 
-    asset_db_writer.write(metadata(instrument, df))
-    for row in df:
-        minute_bar_writer(row, show_progress)
+    asset_db_writer.write(metadata(environ.get("BUNDLE_INSTRUMENT"), df))
+    minute_bar_writer.write((yield 0, df), show_progress)
 
