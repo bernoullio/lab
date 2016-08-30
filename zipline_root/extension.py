@@ -4,6 +4,7 @@ Example:
     - CSV_FILE=fixtures/eur_usd_m1.csv zipline ingest
 """
 import pandas as pd
+from zipline.data import bundles
 
 def ohlc_from_csv(file_path):
     df = pd.read_csv(file_path,
@@ -23,6 +24,7 @@ def metadata(instrument, df):
         'auto_close_date': [ac_date],
         'symbol':          [instrument]})
 
+@bundles.register('csv')
 def csv_ingest(environ,
         asset_db_writer,
         minute_bar_writer,

@@ -9,6 +9,8 @@ live:
     - ./srv/jupyterhub:/srv/jupyterhub
     - ./etc/jupyterhub:/etc/jupyterhub
     - ./var/log:/var/log
+    - ./:/usr/src/app/
+    - ./zipline_root:/home/.zipline
 
 test:
   build: .
@@ -20,5 +22,6 @@ test:
     - ./etc/jupyterhub:/etc/jupyterhub
     - ./var/log:/var/log
     - ./:/usr/src/app/
+    - ./zipline_root:/home/.zipline
   command: py.test
 
