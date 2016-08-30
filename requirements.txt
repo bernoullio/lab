@@ -1,0 +1,8 @@
+jupyter==1.0.0
+jupyter-client==4.3.0
+jupyter-console==5.0.0
+jupyter-core==4.1.1
+jupyterhub==0.6.1
+oauthenticator==0.4.1
+zipline==1.0.1
+pytest
