@@ -1,4 +1,4 @@
-FROM kakadadroid/python-talib:3.3
+FROM kakadadroid/python-talib:3.5
 MAINTAINER skeang@gmail.com
 
 # Instructions from https://github.com/jupyterhub/jupyterhub
