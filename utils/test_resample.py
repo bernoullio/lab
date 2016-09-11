@@ -5,7 +5,7 @@ import pandas as pd
 def test_resample_bid_ask():
     path = 'fixtures/bid-ask.csv'
     resample.resample_bid_ask(path)
-    new_path = 'fixtures/bid-ask-m1.csv'
+    new_path = 'fixtures/resampled/bid-ask.csv'
     assert os.path.exists(new_path)
     df = pd.read_csv(new_path,
             header=None,

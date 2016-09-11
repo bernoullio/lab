@@ -4,6 +4,7 @@ Convert other format into ohlc bars
 import pandas as pd
 
 import pytest
+import os
 
 def resample_bid_ask(path):
     """
@@ -26,5 +27,10 @@ def resample_bid_ask(path):
     df.set_index('datetime', inplace=True)
     df['mid'] = (df['bid']*100000 + df['ask']*100000) // 2
     ohlc = df.mid.resample('1Min').ohlc()
-    ohlc.to_csv(path.replace(".csv", "-m1.csv"))
+
+    dirname, filename = os.path.split(path)
+    new_dir = dirname + "/resampled/"
+    if not os.path.exists(new_dir):
+        os.makedirs(new_dir)
+    ohlc.to_csv(new_dir + filename)
 
