@@ -30,7 +30,12 @@ def resample_bid_ask(path):
 
     dirname, filename = os.path.split(path)
     new_dir = dirname + "/resampled/"
+
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
-    ohlc.to_csv(new_dir + filename)
+
+    new_path = new_dir + filename
+    ohlc.to_csv(new_path)
+
+    return new_path
 
