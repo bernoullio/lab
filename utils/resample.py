@@ -29,7 +29,7 @@ def resample_bid_ask(path):
     ohlc = df.mid.resample('1Min').ohlc()
 
     dirname, filename = os.path.split(path)
-    new_dir = dirname + "/resampled/"
+    new_dir = dirname + "/ohlc/"
 
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
