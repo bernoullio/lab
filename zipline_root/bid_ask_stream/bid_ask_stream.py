@@ -87,7 +87,6 @@ def ingest(environ,
                         metadata.ix[index, "auto_close_date"] = ohlc.index[1] + pd.Timedelta(days=1)
                     yield index, ohlc
 
-    pytest.set_trace()
     minute_bar_writer.write(_minute_iter(path), show_progress)
     asset_db_writer.write(metadata)
 
