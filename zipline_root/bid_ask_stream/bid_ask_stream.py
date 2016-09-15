@@ -32,6 +32,8 @@ def ingest(environ,
 
     path = environ.get('BID_ASK_STREAM_CSV_FOLDER')
     instruments = os.listdir(path) # get ["EURSD", "AUDUSD"]
+
+    # init metadata
     metadata = pd.DataFrame(np.empty(len(instruments), dtype=[
         ('start_date',      'datetime64[ns]'),
         ('end_date',        'datetime64[ns]'),
@@ -39,6 +41,13 @@ def ingest(environ,
         ('exchange',        'object'),
         ('symbol',          'object'),
         ]))
+    metadata['start_date'] = metadata.start_date.dt.tz_localize('UTC')
+    metadata['end_date'] = metadata.end_date.dt.tz_localize('UTC')
+    metadata['auto_close_date'] = metadata.auto_close_date.dt.tz_localize('UTC')
+
+    # Fix calendar
+    calendar.schedule['market_open'] = calendar.schedule.market_open.dt.tz_localize('UTC')
+    calendar.schedule['market_close'] = calendar.schedule.market_close.dt.tz_localize('UTC')
 
     def _minute_iter(path):
         """ Yields (sid, dataframe) for ingesting, while updating
@@ -64,7 +73,6 @@ def ingest(environ,
         ----
         sid is index of insturment folder in the path. No special meaning.
         """
-        pytest.set_trace
         instruments = os.listdir(path) # get ["EURSD", "AUDUSD"]
         for index, name in enumerate(instruments):
             metadata.ix[index] = None, None, None, 'forex', name
@@ -82,9 +90,9 @@ def ingest(environ,
                     ohlc = resample.bid_ask_to_ohlc(os.path.join(current_dir, minute_csv))
 
                     # Keep metadata updated
-                    if metadata.ix[index, "start_date"] is None or metadata.ix[index, "start_date"] > ohlc.index[0]:
+                    if metadata.ix[index, "start_date"] > ohlc.index[0]:
                         metadata.ix[index, "start_date"] = ohlc.index[0]
-                    if metadata.ix[index, "end_date"] is None or metadata.ix[index, "end_date"] > ohlc.index[1]:
+                    if metadata.ix[index, "end_date"] > ohlc.index[1]:
                         metadata.ix[index, "end_date"] = ohlc.index[1]
                         metadata.ix[index, "auto_close_date"] = ohlc.index[1] + pd.Timedelta(days=1)
                     yield index, ohlc

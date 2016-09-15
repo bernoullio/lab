@@ -12,8 +12,11 @@ import bid_ask_stream
 from zipline.data.bundles import register
 from zipline.utils.calendars import register_calendar
 from utils.calendars.exchange_calendar_forex import ForexCalendar
+import pandas as pd
 
-register_calendar('forex', ForexCalendar)
+register_calendar('forex', ForexCalendar())
 register('bid_ask_stream', bid_ask_stream.ingest,
+        start_session= pd.Timestamp(os.environ.get("DATA_START"), tz='utc'),
+        end_session= pd.Timestamp(ios.environ.get("DATA_END"), tz='utc'),
         calendar='forex', minutes_per_day=1440)
 

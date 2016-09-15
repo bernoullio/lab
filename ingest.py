@@ -11,12 +11,15 @@ sys.path.append(os.environ.get("ZIPLINE_ROOT"))
 from zipline_root import bid_ask_stream
 from zipline_root.utils.calendars.exchange_calendar_forex import ForexCalendar
 
+import pandas as pd
 import zipline
 from zipline.data.bundles import register
 from zipline.utils.calendars import register_calendar
 
 register_calendar('forex', ForexCalendar())
 register('bid_ask_stream', bid_ask_stream.ingest,
+        start_session= pd.Timestamp(os.environ.get("DATA_START"), tz='utc'),
+        end_session= pd.Timestamp(os.environ.get("DATA_END"), tz='utc'),
         calendar='forex', minutes_per_day=1440)
 os.environ['BID_ASK_STREAM_CSV_FOLDER'] = os.environ.get('BID_ASK_STREAM_CSV_FOLDER', 'fixtures/stream')
 zipline.data.bundles.ingest('bid_ask_stream', show_progress=True)
