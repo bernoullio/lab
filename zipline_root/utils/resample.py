@@ -29,8 +29,8 @@ def bid_ask_to_ohlc(path):
             parse_dates=[1])
     df.set_index('datetime', inplace=True)
     df['mid'] = (df['bid']*100000 + df['ask']*100000) // 2
-    ohlcv = df.mid.resample('1Min').ohlc()
-    ohlcv['volume'] = df.mid.resample('1Min').count()
+    ohlcv = df.mid.resample('1Min', how='ohlc')
+    ohlcv['volume'] = df.mid.resample('1Min', how='count')
     ohlcv.index = ohlcv.index.tz_localize('UTC')
     return ohlcv
 
