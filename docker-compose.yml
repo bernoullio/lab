@@ -27,6 +27,7 @@ ingest:
     - ./var/log:/var/log
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
+  command: python ingest.py
 
 test:
   build: .

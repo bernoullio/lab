@@ -50,10 +50,12 @@ def ingest(environ,
             The path to a folder containing sub folder of instruments,
             which in turn contain ohlc directory. For example:
             /path:
-              - /EURUSD:
-                  - 06.csv
-              - /AUDUSD
-                  - 06.csv
+              ├── EURUSD
+              │   ├── EURUSD-2016-06.zip
+              │   └── EURUSD-2016-07.zip
+              └── GBPUSD
+                  ├── GBPUSD-2016-06.zip
+                  └── GBPUSD-2016-07.zip
         Returns
         -------
         Yield (sid, dataframe)
@@ -67,10 +69,10 @@ def ingest(environ,
         for index, name in enumerate(instruments):
             metadata.ix[index] = None, None, None, 'forex', name
             current_dir = os.path.join(path, name)
-            # zips = filter(lambda x: ".zip" in x, os.listdir(current_dir))
-            # for z in zips:
-                # zfile = zipfile.ZipFile(os.path.join(current_dir, z), 'r')
-                # zfile.extractall(current_dir)
+            zips = filter(lambda x: ".zip" in x, os.listdir(current_dir))
+            for z in zips:
+                zfile = zipfile.ZipFile(os.path.join(current_dir, z), 'r')
+                zfile.extractall(current_dir)
             csvs = filter(lambda x: ".csv" in x, os.listdir(current_dir))
             with maybe_show_progress(
                     csvs,

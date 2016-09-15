@@ -22,7 +22,7 @@ Exposes [Zipline](https://github.com/quantopian/zipline) capable notebooks throu
                   ├── GBPUSD-2016-06.zip
                   └── GBPUSD-2016-07.zip
 
-- `docker-compose run --rm ingest zipline ingest -b bid_ask_stream`
+- `docker-compose run --rm ingest`
 
 # Test
 
