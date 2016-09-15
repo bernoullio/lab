@@ -8,11 +8,26 @@ Exposes [Zipline](https://github.com/quantopian/zipline) capable notebooks throu
 # Start hub
 
 `docker-compose build`
-`docker-compose up live`
+`docker-compose up hub`
 
+
+# Ingest new prices data
+
+- Download stream data from TrueFX and put in fixture/stream as follows:
+   + fixtures/stream
+              ├── EURUSD
+              │   ├── EURUSD-2016-06.zip
+              │   └── EURUSD-2016-07.zip
+              └── GBPUSD
+                  ├── GBPUSD-2016-06.zip
+                  └── GBPUSD-2016-07.zip
+
+- `docker-compose run --rm ingest zipline ingest -b bid_ask_stream`
 
 # Test
+
 `docker-compose run --rm test`
 
 To run individual pytest:
-`docker-comopse run --rm test py.test zipline_root/test_extension.py`
+`docker-comopse run --rm test py.test zipline_root/utils/test_resample.py:test_bid_ask_to_ohlc`
+

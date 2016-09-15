@@ -10,7 +10,7 @@ from utils.calendars.exchange_calendar_forex import ForexCalendar
 from zipline.data.bundles import register
 from zipline.utils.calendars import register_calendar
 
-# @pytest.mark.skip("takes up space")
+@pytest.mark.skip("need pandas 0.17.1, which is prepared with docker-compose service named ingest")
 def test_ingest():
     register_calendar('forex', ForexCalendar())
     register('bid_ask_stream', bid_ask_stream.ingest,
