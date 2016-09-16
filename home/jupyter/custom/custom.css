@@ -1,6 +1,6 @@
 #ipython_notebook img, .jpy-logo {
   display:block;
-  background: url(logo.png) no-repeat;
+  background: url(images/logo.png) no-repeat;
   background-size: contain;
   width: 233px;
   padding-left: 233px;
