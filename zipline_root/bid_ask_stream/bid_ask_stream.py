@@ -40,6 +40,7 @@ def ingest(environ,
         ('auto_close_date', 'datetime64[ns]'),
         ('exchange',        'object'),
         ('symbol',          'object'),
+        ('asset_name',      'object'),
         ]))
     metadata['start_date'] = metadata.start_date.dt.tz_localize('UTC')
     metadata['end_date'] = metadata.end_date.dt.tz_localize('UTC')
@@ -75,12 +76,12 @@ def ingest(environ,
         """
         instruments = os.listdir(path) # get ["EURSD", "AUDUSD"]
         for index, name in enumerate(instruments):
-            metadata.ix[index] = None, None, None, 'forex', name
+            metadata.ix[index] = None, None, None, 'forex', name, name
             current_dir = os.path.join(path, name)
             zips = filter(lambda x: ".zip" in x, os.listdir(current_dir))
-            for z in zips:
-                zfile = zipfile.ZipFile(os.path.join(current_dir, z), 'r')
-                zfile.extractall(current_dir)
+            # for z in zips:
+                # zfile = zipfile.ZipFile(os.path.join(current_dir, z), 'r')
+                # zfile.extractall(current_dir)
             csvs = filter(lambda x: ".csv" in x, os.listdir(current_dir))
             with maybe_show_progress(
                     csvs,
@@ -90,13 +91,16 @@ def ingest(environ,
                     ohlc = resample.bid_ask_to_ohlc(os.path.join(current_dir, minute_csv))
 
                     # Keep metadata updated
-                    if metadata.ix[index, "start_date"] > ohlc.index[0]:
+                    if metadata.ix[index, "start_date"] is pd.NaT or metadata.start_date.ix[index] > ohlc.index[0]:
                         metadata.ix[index, "start_date"] = ohlc.index[0]
-                    if metadata.ix[index, "end_date"] > ohlc.index[1]:
-                        metadata.ix[index, "end_date"] = ohlc.index[1]
-                        metadata.ix[index, "auto_close_date"] = ohlc.index[1] + pd.Timedelta(days=1)
+                    if metadata.ix[index, "end_date"] is pd.NaT or metadata.end_date.ix[index] < ohlc.index[-1]:
+                        metadata.ix[index, "end_date"] = ohlc.index[-1]
+                        metadata.ix[index, "auto_close_date"] = ohlc.index[-1] + pd.Timedelta(days=1)
                     yield index, ohlc
 
     minute_bar_writer.write(_minute_iter(path), show_progress)
-    asset_db_writer.write(metadata)
+    asset_db_writer.write(equities=metadata)
+
+    # TODO: Add interst charges?
+    adjustment_writer.write()
 
