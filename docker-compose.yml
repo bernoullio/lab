@@ -11,6 +11,7 @@ hub:
     - ./var/log:/var/log
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
+    - ./home/jupyter/images:/usr/local/share/jupyter/hub/static/images
 
 # Somehow pandas==0.18.1 doesn't play nice with zipline.
 # We build a new image with 0.18.1 for ingesting data, because

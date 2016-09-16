@@ -292,6 +292,9 @@ c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
 
 # Whitelist of environment variables for the subprocess to inherit
 # c.Spawner.env_keep = ['PATH', 'PYTHONPATH', 'CONDA_ROOT', 'CONDA_DEFAULT_ENV', 'VIRTUAL_ENV', 'LANG', 'LC_ALL']
+# c.Spawner.env_keep = ['JUPYTER_CONFIG_DIR']
+os.environ['JUPYTER_CONFIG_DIR'] = '/home/jupyter'
+c.Spawner.env_keep.append('JUPYTER_CONFIG_DIR')
 
 # Environment variables to load for the Spawner.
 #
