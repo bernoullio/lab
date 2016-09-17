@@ -1,6 +1,7 @@
 hub:
   build: .
   env_file: .env
+  dockerfile: pandas18.Dockerfile
   ports:
     - "8333:8000"
   volumes:
@@ -12,6 +13,7 @@ hub:
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
     - ./home/jupyter/custom/images:/usr/local/share/jupyter/hub/static/images
+  command: jupyterhub --no-ssl -f /etc/jupyterhub/jupyterhub_config.py
 
 # Somehow pandas==0.18.1 doesn't play nice with zipline.
 # We build a new image with 0.18.1 for ingesting data, because
@@ -19,13 +21,8 @@ hub:
 ingest:
   build: .
   env_file: .env.sample
-  dockerfile: ingest.Dockerfile
+  dockerfile: pandas18.Dockerfile
   volumes:
-    - ./home:/home
-    - ./srv/oauthenticator:/srv/oauthenticator
-    - ./srv/jupyterhub:/srv/jupyterhub
-    - ./etc/jupyterhub:/etc/jupyterhub
-    - ./var/log:/var/log
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
   command: python ingest.py
