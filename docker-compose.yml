@@ -13,6 +13,7 @@ hub:
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
     - ./home/jupyter/custom/images:/usr/local/share/jupyter/hub/static/images
+    - ./custom_modules/toolbox:/usr/local/lib/python3.5/site-packages/toolbox
   command: jupyterhub --no-ssl -f /etc/jupyterhub/jupyterhub_config.py
 
 # Somehow pandas==0.18.1 doesn't play nice with zipline.

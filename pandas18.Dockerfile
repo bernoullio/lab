@@ -19,4 +19,3 @@ RUN ["sh", "addusers.sh"]
 CMD jupyterhub --no-ssl -f /etc/jupyterhub/jupyterhub_config.py
 
 RUN pip3 install pandas==0.18.1
-COPY custom_modules/toolbox /usr/local/lib/python3.5/site-packages
