@@ -1,7 +1,6 @@
-hub:
+lab:
   build: .
   env_file: .env
-  dockerfile: pandas18.Dockerfile
   ports:
     - "8333:8000"
   volumes:
@@ -22,22 +21,7 @@ hub:
 ingest:
   build: .
   env_file: .env.sample
-  dockerfile: pandas18.Dockerfile
   volumes:
     - ./:/usr/src/app/
     - ./zipline_root:/home/.zipline
   command: python ingest.py
-
-test:
-  build: .
-  env_file: .env.sample
-  volumes:
-    - ./home:/home
-    - ./srv/oauthenticator:/srv/oauthenticator
-    - ./srv/jupyterhub:/srv/jupyterhub
-    - ./etc/jupyterhub:/etc/jupyterhub
-    - ./var/log:/var/log
-    - ./:/usr/src/app/
-    - ./zipline_root:/home/.zipline
-  command: py.test
-

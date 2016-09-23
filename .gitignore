@@ -1,3 +1,8 @@
+zipline_root/data
+jupyterhub.sqlite
+jupyterhub_cookie_secret
+fixtures/stream
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,3 +1,5 @@
+# See docker-compose.yml for services to run
+
 FROM kakadadroid/python-talib:3.5
 MAINTAINER skeang@gmail.com
 
@@ -11,7 +13,7 @@ RUN pip3 install -vr requirements.txt
 
 COPY srv/oauthenticator/addusers.sh .
 COPY srv/oauthenticator/userlist .
+COPY home/shared /home/shared
 RUN ["sh", "addusers.sh"]
 
 CMD jupyterhub --no-ssl -f /etc/jupyterhub/jupyterhub_config.py
-
