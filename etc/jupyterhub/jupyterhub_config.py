@@ -295,6 +295,7 @@ c.JupyterHub.authenticator_class = 'oauthenticator.LocalGoogleOAuthenticator'
 # c.Spawner.env_keep = ['JUPYTER_CONFIG_DIR']
 os.environ['JUPYTER_CONFIG_DIR'] = '/home/jupyter'
 c.Spawner.env_keep.append('JUPYTER_CONFIG_DIR')
+c.Spawner.env_keep.append('ZIPLINE_ROOT')
 
 # Environment variables to load for the Spawner.
 #

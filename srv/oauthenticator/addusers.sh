@@ -7,4 +7,5 @@ for line in `cat userlist`; do
   user=`echo $line | cut -f 1 -d' '`
   echo "adding user $user"
   useradd -m -s /bin/bash $user
+  cp /home/shared/* /home/$user/
 done
