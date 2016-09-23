@@ -21,7 +21,6 @@ lab:
 ingest:
   build: .
   env_file: .env.sample
-  volumes:
-    - ./:/usr/src/app/
-    - ./zipline_root:/home/.zipline
+  volumes_from:
+    - lab
   command: python ingest.py
