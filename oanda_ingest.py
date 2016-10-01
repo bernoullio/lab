@@ -4,7 +4,7 @@ from toolbox.data import OandaMinutePriceIngest
 
 def ingest(event, context):
     ingest = OandaMinutePriceIngest(os.environ.get("DATABASE_URL"))
-    currencies = ["EUR_UDS",
+    currencies = ["EUR_USD",
                   "EUR_JPY",
                   "EUR_GBP",
                   "EUR_SGD",
@@ -18,7 +18,7 @@ def ingest(event, context):
                   "ZAR_JPY"]
     for currency in currencies:
         print("Ingesting {}".format(currency))
-        ingest.run("EUR_USD")
+        ingest.run(currency)
 
 if __name__ == "__main__":
     ingest(None, None)
