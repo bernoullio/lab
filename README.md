@@ -14,6 +14,7 @@ Exposes [Zipline](https://github.com/quantopian/zipline) capable notebooks throu
 # Ingest new prices data
 
 - Download stream data from TrueFX and put in fixture/stream as follows:
+
      fixtures/stream
               ├── EURUSD
               │   ├── EURUSD-2016-06.zip
@@ -31,3 +32,7 @@ Exposes [Zipline](https://github.com/quantopian/zipline) capable notebooks throu
 To run individual pytest:
 `docker-comopse run --rm lab py.test zipline_root/utils/test_resample.py:test_bid_ask_to_ohlc`
 
+# TODO
+
+- function to ingest minute data to mysql
+- test trailling + no intervention
